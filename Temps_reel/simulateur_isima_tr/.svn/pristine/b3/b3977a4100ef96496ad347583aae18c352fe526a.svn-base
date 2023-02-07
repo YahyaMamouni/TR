@@ -1,0 +1,23 @@
+plan_rouge
+x=-5 lidrtr01
+dx=-30,type=cvs bstart
+dx=-30,type=zfv p1m
+lidrco01
+type=cj	p1m
+viga
+type=cv p1m
+lidrra5mtr02
+lidrra5mtr02
+type=cr p1m
+viga
+type=cv p1m
+lidr
+lidrtrvi01
+type=cb p1m
+viga
+type=cv p1m
+lidrmora5mtr01
+flip=x lidrmora5mtr01
+type=cc p1m
+viga
+type=cvf bfinish

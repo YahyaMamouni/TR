@@ -1,0 +1,25 @@
+typedef union
+{
+    struct
+    {
+        unsigned char id;
+        unsigned char rtr;
+        unsigned short  val;
+    } data;
+    long  msg;
+} CanFrame;
+
+int  CanRxFrameReady(void);
+void CanRxReadFrame(CanFrame* data);
+
+int CanTxReady(void);
+void CanTxSendFrame(CanFrame data);
+
+void* HWCanTx(void* p);
+void* HWCanRx(void* p);
+
+void HardwareInit(int CanRxInterruptNo_);
+void HardwareHalt(void);
+
+void ColorCaptInit(int ColorCaptInterruptNo_);
+unsigned int ColorCaptRead(void);

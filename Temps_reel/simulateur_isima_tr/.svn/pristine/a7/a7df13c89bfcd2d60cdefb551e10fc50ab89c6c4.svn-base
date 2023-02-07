@@ -1,0 +1,15 @@
+
+void ControlPanelInit(int key_interrupt_level_);
+void ControlPanelInitAddr(char * adresse,int key_interrupt_level_);
+void lcd_putc(char c);
+void lcd_str(char * s);
+void lcd_com(char c);
+void led_j(int on_off);
+void led_r(int on_off);
+void led_v(int on_off);
+int KeyboardGetLastKey(void);
+
+extern short ad00,ad01;
+extern QueueHandle_t QdmTouche;
+extern unsigned char BP_G,BP_M,BP_D;
+extern int last_key;

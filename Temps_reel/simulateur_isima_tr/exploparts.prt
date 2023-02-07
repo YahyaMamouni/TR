@@ -1,0 +1,21 @@
+// Explosion parts
+
+ttl_generator=0.1;
+ttl_particles=2;
+ttl_particles_random=0;
+
+particles_per_second=400;
+
+texture="parts.tga";
+
+size=0.05;
+size_random=0.025;
+size_inc_per_sec=0;
+//size_limit=1;
+
+gravity={0,0,-4};
+vector={0,0,2};
+vector_random={3,3,2};
+
+
+// end of file.

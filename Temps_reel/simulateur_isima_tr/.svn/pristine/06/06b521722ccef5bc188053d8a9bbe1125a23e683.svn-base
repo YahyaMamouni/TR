@@ -1,0 +1,24 @@
+// White (and green) smoke
+
+ttl_generator=0;
+ttl_particles=0.9;
+ttl_particles_random=0.5;
+
+particles_per_second=200;
+
+texture="smoke.tga";
+
+size=0.3;
+size_random=0.3;
+size_inc_per_sec=0.5;
+size_limit=3;
+
+gravity={0,0,1};
+vector={0,0,0.3};
+vector_random={0.4,0.4,0.4};
+
+// RGBA
+color_start={0.9,1.0,0.9,0.5};
+color_end={1,1,1,0};
+
+// end of file.

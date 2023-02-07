@@ -1,0 +1,179 @@
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+#include "semphr.h"
+#include <stdio.h>
+
+#include "HardwareEmu.h"
+#include "remote_socket_client.h"
+
+#define local_periph "127.0.0.1"
+
+static Remote_Client remote;
+
+int run=0;
+
+HANDLE tHWCanTx;
+HANDLE mHWCanTx;
+int HWCanTxReadyToSend=1;
+int HWCanTxN=0;
+#define HWCanTxNMax 8
+CanFrame HWCanTxFrame[HWCanTxNMax];
+int	 CanTxReady(void);
+void CanTxSendFrame(CanFrame data);
+
+HANDLE tHWCanRx;
+HANDLE mHWCanRx;
+int HWCanRxFull=0;
+int HWCanRxN=0;
+#define HWCanRxNMax 16
+CanFrame HWCanRxFrame[HWCanRxNMax];
+int  CanRxFrameReady(void);
+void CanRxReadFrame(CanFrame* data);
+
+int CanRxInterruptNo=0;
+int ColorCaptInterruptNo=0;
+unsigned int ColorCaptValue=0;
+
+unsigned int ColorCaptRead(void){
+unsigned int ret;
+	vPortEnterCritical();
+	ret = ColorCaptValue;
+	vPortExitCritical();
+	return ret;
+}
+
+int CanTxReady(void){
+	return HWCanTxReadyToSend;
+}
+
+void CanTxSendFrame(CanFrame data){
+	taskENTER_CRITICAL();
+	if(WaitForSingleObject(mHWCanTx,1000)!=WAIT_OBJECT_0){
+		printf("TimeOut dans CanTxSendFrame\n");
+	}else{
+		if (HWCanTxN<HWCanTxNMax-1){
+			memcpy(&HWCanTxFrame[HWCanTxN],&data,sizeof(CanFrame));
+			HWCanTxN++;
+			if (HWCanTxN>=(HWCanTxNMax))
+				HWCanTxReadyToSend=0;
+		}else{
+			printf("CanTx Overrun ! \n");
+			Sleep(1);
+		}
+	}
+	ReleaseMutex(mHWCanTx);
+	taskEXIT_CRITICAL();
+}
+
+int CanRxFrameReady(void){
+int ret=0;
+	vPortEnterCritical();
+	if (HWCanRxN>0)
+		ret=1;
+	vPortExitCritical();
+	return ret;
+}
+
+void* HWCanTx(void* p){
+	while(run){
+		if(WaitForSingleObject(mHWCanTx,1000)!=WAIT_OBJECT_0){
+			printf("Timeout dans HWCanTx\n");
+		}else{
+			int i;
+			for(i=0;i<HWCanTxN;i++){
+				remote_send(&remote,HWCanTxFrame[i].data.id,(HWCanTxFrame[i].data.rtr==1)?'?':':',HWCanTxFrame[i].data.val);
+			}
+			HWCanTxN=0;
+			HWCanTxReadyToSend=1;
+			ReleaseMutex(mHWCanTx);
+		}
+		Sleep(0);
+	}
+	return NULL;
+}
+
+void* HWCanRx(void* p){
+	CanFrame tmp;
+	while(run){
+		Sleep(0);
+		remote_receive(&remote,&tmp.data.id,&tmp.data.rtr,(short *) &tmp.data.val);
+		if (tmp.data.rtr=='=')
+			tmp.data.rtr=0;
+		if (tmp.data.rtr=='?')
+			tmp.data.rtr=1;
+		if (tmp.data.id=='!'){
+			ColorCaptValue=tmp.data.val;
+			vPortGenerateSimulatedInterrupt(ColorCaptInterruptNo);
+			continue;
+		}
+
+		if(WaitForSingleObject(mHWCanRx,1000)!=WAIT_OBJECT_0){
+			printf("TimeOut dans HWCanRx\n");
+		}else{
+			if (HWCanRxN<HWCanRxNMax-1){
+				memcpy(&HWCanRxFrame[HWCanRxN],&tmp,sizeof(CanFrame));
+				HWCanRxN++;
+				if (HWCanRxN>=HWCanRxNMax)
+					HWCanRxFull=1;
+			}else{
+				printf ("---------Rx Frame Lost %c %d.\n",tmp.data.id,tmp.data.val);
+			}
+			ReleaseMutex(mHWCanRx);
+		}
+		if (CanRxInterruptNo){
+			vPortGenerateSimulatedInterrupt(CanRxInterruptNo);
+		}
+	}
+	return NULL;
+}
+
+void CanRxReadFrame(CanFrame* data){
+	taskENTER_CRITICAL();
+	if(WaitForSingleObject(mHWCanRx,1000)!=WAIT_OBJECT_0){
+		printf("TimeOut dans CanRxReadFrame\n");
+	}else{
+		if (HWCanRxN>0){
+			int i;
+			memcpy(data,&HWCanRxFrame[0],sizeof(CanFrame));
+			for(i=1;i<HWCanRxN;i++)
+				memcpy(&HWCanRxFrame[i-1],&HWCanRxFrame[i],sizeof(CanFrame));
+			HWCanRxN--;
+			HWCanRxFull=0;
+		}
+		ReleaseMutex(mHWCanRx);
+	}
+	taskEXIT_CRITICAL();
+}
+
+void HardwareInit(int CanRxInterruptNo_){
+    remote_init(local_periph,&remote);
+    run=1;
+
+    mHWCanTx=CreateMutex(NULL,FALSE,NULL);
+    tHWCanTx= CreateThread( NULL, 0, ( LPTHREAD_START_ROUTINE ) HWCanTx, NULL, CREATE_SUSPENDED, NULL );
+	SetThreadAffinityMask( tHWCanTx, 0x01 );
+	SetThreadPriorityBoost( tHWCanTx, TRUE );
+	SetThreadPriority( tHWCanTx, THREAD_PRIORITY_NORMAL );
+    ResumeThread(tHWCanTx);
+
+	mHWCanRx=CreateMutex(NULL,FALSE,NULL);
+    tHWCanRx= CreateThread( NULL, 0, ( LPTHREAD_START_ROUTINE ) HWCanRx, NULL, CREATE_SUSPENDED, NULL );
+	SetThreadAffinityMask( tHWCanRx, 0x01 );
+	SetThreadPriorityBoost( tHWCanRx, TRUE );
+	SetThreadPriority( tHWCanRx, THREAD_PRIORITY_NORMAL );
+    ResumeThread(tHWCanRx);
+    CanRxInterruptNo=CanRxInterruptNo_;
+}
+
+void ColorCaptInit(int ColorCaptInterruptNo_){
+	ColorCaptInterruptNo=ColorCaptInterruptNo_;
+}
+
+void HardwareHalt(void){
+	run=0;
+	CloseHandle(tHWCanRx);
+	CloseHandle(tHWCanTx);
+	CanRxInterruptNo=0;
+	ColorCaptInterruptNo=0;
+}

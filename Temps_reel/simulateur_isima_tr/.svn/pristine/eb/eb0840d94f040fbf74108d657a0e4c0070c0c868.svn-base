@@ -1,0 +1,27 @@
+#define serveur1        "192.168.151.51"
+#include <conio.h>
+
+enum {abandon,ndepart,fcourse} raison;
+
+
+void remote_nom(Remote_Client * remote,char * nom){
+int i;
+char c;
+    for(i=0;i<8;i++){
+        c=nom[i];
+        if (!c) return;
+        remote_write(remote,'I',c);
+    }
+}
+
+int touche_Q(void){
+char c;
+
+    if (kbhit()){
+        c=getch();
+        if (c=='q' || c=='Q')
+            return 1;
+    }
+    return 0;
+}
+
