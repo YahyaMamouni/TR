@@ -62,8 +62,8 @@ Bit 0 : Point de passage Vert, remis à zéro lors de la lecture du périphériq
    15 : Le Feu est Rouge ou orange
 **/
 
-//Q1
-/*
+
+
 void task_1(void * queue){
 int i;
 char nom[]="#VROUM*";
@@ -87,99 +87,6 @@ CanFrame cmd={{'I',0,0}};
     }
 
 }
-*/
-
-// Q2 - Q3
-/*
-void task_1(void * queue){
-
-    CanFrame com ;
-    com.data.id='T';
-    com.data.rtr=0;
-    com.data.val=450;
-
-    if (CanTxReady()){
-        CanTxSendFrame (com);
-    }
-    vTaskDelay(pdMS_TO_TICKS(2000));
-    com.data.val=-450;
-    if (CanTxReady()){
-        CanTxSendFrame (com);
-    }
-
-}*/
-
-// Q4
-void task_1(void * queue){
-int i;
-char nom[]="#VROUM*";
-CanFrame cmd ;
-cmd.data.id='T';
-cmd.data.rtr=0;
-cmd.data.val=450;
-
-	while (1){
-		cmd.data.val=ad00;
-		while(!CanTxReady())
-            vTaskDelay(pdMS_TO_TICKS(1));
-        CanTxSendFrame(cmd);
-		vTaskDelay(pdMS_TO_TICKS(10));
-	}
-
-
-}
-
-// Q6
-void task_azimuth(){
-CanFrame cmd, receive ;
-cmd.data.id='R';
-cmd.data.rtr=1;
-int angle;
-char tmp[32];
-    while(1){
-            if(CanTxReady()){
-                CanTxSendFrame(cmd);
-                vTaskDelay(pdMS_TO_TICKS(250));
-                if (CanTxReady()){
-                    CanRxReadFrame(&receive);
-                    angle=(signed short)receive.data.val;
-                }
-            }
-            sprintf(tmp,"Azimuth:%d ",angle/10);
-            lcd_com(0xC0);
-            lcd_str(tmp);
-            vTaskDelay(pdMS_TO_TICKS(250));
-    }
-}
-
-//Q7-8
-void task_auto_reg(){
-CanFrame cmd, receive,reg ;
-cmd.data.id='R';
-cmd.data.rtr=1;
-reg.data.id='T';
-reg.data.rtr = 0;
-int angle;
-char tmp[32];
-    while(1){
-            if(CanTxReady()){
-                CanTxSendFrame(cmd);
-                vTaskDelay(pdMS_TO_TICKS(25));
-                if (CanTxReady()){
-                    CanRxReadFrame(&receive);
-                    angle=(signed short)receive.data.val;
-                }
-            }
-            if (((ad01*2)-1024) != angle){
-                reg.data.val = ((ad01*2)-1024) - angle;
-                while(!CanTxReady())
-                    vTaskDelay(pdMS_TO_TICKS(1));
-                CanTxSendFrame(reg);
-                vTaskDelay(pdMS_TO_TICKS(10));
-            }
-
-        }
-}
 
 void timer1(TimerHandle_t p){
     static int j=0;
@@ -188,18 +95,15 @@ void timer1(TimerHandle_t p){
 
 }
 
-// Q5
 void task_ad01(){
     while(1){
             char tmp[32];
             sprintf(tmp,"ad01:%d ",ad01);
-            lcd_com(0x80);
+            lcd_com(0xC0);
             lcd_str(tmp);
-            vTaskDelay(pdMS_TO_TICKS(250));
+            vTaskDelay(pdMS_TO_TICKS(125));
     }
 }
-
-
 
 
 int main()
@@ -212,10 +116,8 @@ TimerHandle_t htimer1;
     //ControlPanelInitAddr("192.168.1.221",7);
 
     printf("Demarrage des taches\n");
-    //xTaskCreate(task_1,"Tache 1",configMINIMAL_STACK_SIZE,NULL,6,&htask_1);
+    xTaskCreate(task_1,"Tache 1",configMINIMAL_STACK_SIZE,NULL,6,&htask_1);
     xTaskCreate(task_ad01,"Tache ad01",configMINIMAL_STACK_SIZE,NULL,6,&htask_1);
-    xTaskCreate(task_azimuth,"Tache azimuth",configMINIMAL_STACK_SIZE,NULL,6,&htask_1);
-    xTaskCreate(task_auto_reg,"Tache regulation",configMINIMAL_STACK_SIZE,NULL,6,&htask_1);
     htimer1=xTimerCreate("Timer 1",250,pdTRUE,NULL,timer1);
     xTimerStart(htimer1,0);
     vTaskStartScheduler();

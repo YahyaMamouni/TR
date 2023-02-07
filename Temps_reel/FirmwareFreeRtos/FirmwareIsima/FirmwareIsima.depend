@@ -194,3 +194,198 @@
 	"HardwareEmu.h"
 	"ControlPanelClient.h"
 
+1675687126 source:c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\bsp\controlpanelclient.c
+	<stdio.h>
+	"FreeRTOS.h"
+	"task.h"
+	"queue.h"
+	"semphr.h"
+	<winsock.h>
+
+1675687127 c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\include\freertos.h
+	<stddef.h>
+	<stdint.h>
+	"FreeRTOSConfig.h"
+	"projdefs.h"
+	"portable.h"
+	<reent.h>
+
+1675687125 c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\firmwareisima\freertosconfig.h
+
+1675687127 c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\include\projdefs.h
+
+1675687127 c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\include\portable.h
+	"deprecated_definitions.h"
+	"portmacro.h"
+	"mpu_wrappers.h"
+
+1675687127 c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\include\deprecated_definitions.h
+	"..\..\Source\portable\owatcom\16bitdos\pc\portmacro.h"
+	"..\..\Source\portable\owatcom\16bitdos\flsh186\portmacro.h"
+	"../portable/GCC/ATMega323/portmacro.h"
+	"../portable/IAR/ATMega323/portmacro.h"
+	"../../Source/portable/MPLAB/PIC24_dsPIC/portmacro.h"
+	"../../Source/portable/MPLAB/PIC24_dsPIC/portmacro.h"
+	"../../Source/portable/MPLAB/PIC18F/portmacro.h"
+	"../../Source/portable/MPLAB/PIC32MX/portmacro.h"
+	"libFreeRTOS/Include/portmacro.h"
+	"../../Source/portable/SDCC/Cygnal/portmacro.h"
+	"../../Source/portable/GCC/ARM7_LPC2000/portmacro.h"
+	"portmacro.h"
+	"../../Source/portable/GCC/ARM7_LPC23xx/portmacro.h"
+	"..\..\Source\portable\IAR\MSP430\portmacro.h"
+	"../../Source/portable/GCC/MSP430F449/portmacro.h"
+	"../../Source/portable/Rowley/MSP430F449/portmacro.h"
+	"..\..\Source\portable\RVDS\ARM7_LPC21xx\portmacro.h"
+	"../../Source/portable/GCC/ARM7_AT91SAM7S/portmacro.h"
+	"..\..\Source\portable\IAR\AtmelSAM7S64\portmacro.h"
+	"..\..\Source\portable\IAR\AtmelSAM9XE\portmacro.h"
+	"..\..\Source\portable\IAR\LPC2000\portmacro.h"
+	"..\..\Source\portable\IAR\STR71x\portmacro.h"
+	"..\..\Source\portable\IAR\STR75x\portmacro.h"
+	"..\..\Source\portable\GCC\STR75x\portmacro.h"
+	"..\..\Source\portable\IAR\STR91x\portmacro.h"
+	"../../Source/portable/GCC/H8S2329/portmacro.h"
+	"../../Source/portable/GCC/ARM7_AT91FR40008/portmacro.h"
+	"../../Source/portable/RVDS/ARM_CM3/portmacro.h"
+	"../../Source/portable/GCC/ARM_CM3/portmacro.h"
+	"../../Source/portable/GCC/ARM_CM3/portmacro.h"
+	"../../Source/portable/IAR/ARM_CM3/portmacro.h"
+	"../../Source/portable/IAR/ARM_CM3/portmacro.h"
+	"../../Source/portable/CodeWarrior/HCS12/portmacro.h"
+	"../../Source/portable/GCC/MicroBlaze/portmacro.h"
+	"..\..\Source\portable\Paradigm\Tern_EE\small\portmacro.h"
+	"../../Source/portable/GCC/HCS12/portmacro.h"
+	"../../Source/portable/GCC/MCF5235/portmacro.h"
+	"../../../Source/portable/GCC/ColdFire_V2/portmacro.h"
+	"../../Source/portable/CodeWarrior/ColdFire_V2/portmacro.h"
+	"../../Source/portable/GCC/PPC405_Xilinx/portmacro.h"
+	"../../Source/portable/GCC/PPC440_Xilinx/portmacro.h"
+	"..\..\Source\portable\Softune\MB96340\portmacro.h"
+	"frconfig.h"
+	"..\portable\BCC\16BitDOS\PC\prtmacro.h"
+	"frconfig.h"
+	"..\portable\BCC\16BitDOS\flsh186\prtmacro.h"
+	"portmacro.h"
+	"portmacro.h"
+	"portmacro.h"
+	"portmacro.h"
+	"../../Source/portable/IAR/V850ES/portmacro.h"
+	"../../Source/portable/IAR/V850ES/portmacro.h"
+	"../../Source/portable/IAR/V850ES/portmacro.h"
+	"../../Source/portable/IAR/V850ES/portmacro.h"
+	"../../Source/portable/IAR/V850ES/portmacro.h"
+	"../../Source/portable/IAR/78K0R/portmacro.h"
+	"../../Source/portable/IAR/78K0R/portmacro.h"
+
+1675687129 c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\portable\mplab\pic24_dspic\portmacro.h
+
+1675687130 c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\portable\mplab\pic18f\portmacro.h
+
+1675687129 c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\portable\mplab\pic32mx\portmacro.h
+	<xc.h>
+
+1675687129 c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\portable\msvc-mingw\portmacro.h
+	<windows.h>
+	<winbase.h>
+
+1675687127 c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\include\mpu_wrappers.h
+
+1675687127 c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\include\task.h
+	"list.h"
+
+1675687127 c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\include\list.h
+
+1675687127 c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\include\queue.h
+	"task.h"
+
+1675687127 c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\include\semphr.h
+	"queue.h"
+
+1675687126 source:c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\bsp\hardwareemu.c
+	<stdio.h>
+	"FreeRTOS.h"
+	"task.h"
+	"queue.h"
+	"remote_socket_client.h"
+	"HardwareEmu.h"
+	"ControlPanelClient.h"
+
+1675687126 c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\bsp\remote_socket_client.h
+
+1675687126 c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\bsp\hardwareemu.h
+
+1675687126 c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\bsp\controlpanelclient.h
+
+1675687127 source:c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\event_groups.c
+	<stdlib.h>
+	"FreeRTOS.h"
+	"task.h"
+	"timers.h"
+	"event_groups.h"
+
+1675687127 c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\include\timers.h
+	"task.h"
+
+1675687127 c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\include\event_groups.h
+	"timers.h"
+
+1675687130 source:c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\list.c
+	<stdlib.h>
+	"FreeRTOS.h"
+	"list.h"
+
+1675687129 source:c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\portable\memmang\heap_4.c
+	<stdlib.h>
+	"FreeRTOS.h"
+	"task.h"
+
+1675687129 source:c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\portable\msvc-mingw\port.c
+	<stdio.h>
+	"FreeRTOS.h"
+	"task.h"
+	"mmsystem.h"
+
+1675687127 source:c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\queue.c
+	<stdlib.h>
+	<string.h>
+	"FreeRTOS.h"
+	"task.h"
+	"queue.h"
+	"croutine.h"
+
+1675687127 c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\include\croutine.h
+	"list.h"
+
+1675687127 source:c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\tasks.c
+	<stdlib.h>
+	<string.h>
+	"FreeRTOS.h"
+	"task.h"
+	"timers.h"
+	"stack_macros.h"
+	<stdio.h>
+	"tasks_test_access_functions.h"
+	"freertos_tasks_c_additions.h"
+
+1675687127 c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\include\stack_macros.h
+
+1675687127 source:c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\freertos\source\timers.c
+	<stdlib.h>
+	"FreeRTOS.h"
+	"task.h"
+	"queue.h"
+	"timers.h"
+
+1675784226 source:c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\firmwareisima\main_isima.c
+	<stdio.h>
+	<stdlib.h>
+	"FreeRTOS.h"
+	"task.h"
+	"queue.h"
+	"semphr.h"
+	"timers.h"
+	"event_groups.h"
+	"HardwareEmu.h"
+	"ControlPanelClient.h"
+
