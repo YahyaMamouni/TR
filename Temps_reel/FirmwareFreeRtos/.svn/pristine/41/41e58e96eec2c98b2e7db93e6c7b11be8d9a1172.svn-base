@@ -62,12 +62,6 @@ Bit 0 : Point de passage Vert, remis à zéro lors de la lecture du périphériq
    15 : Le Feu est Rouge ou orange
 **/
 
-
-int consigne_vitesse = 0;
-int distance_telem = 0;
-int consigne_distance = 0;
-SemaphoreHandle_t CanSem;
-
 //Q1
 /*
 void task_1(void * queue){
@@ -168,7 +162,6 @@ reg.data.rtr = 0;
 int angle;
 char tmp[32];
     while(1){
-            xSemaphoreTake(CanSem,portMAX_DELAY);
             if(CanTxReady()){
                 CanTxSendFrame(cmd);
                 vTaskDelay(pdMS_TO_TICKS(25));
@@ -183,12 +176,9 @@ char tmp[32];
                     vTaskDelay(pdMS_TO_TICKS(1));
                 CanTxSendFrame(reg);
                 vTaskDelay(pdMS_TO_TICKS(10));
-
             }
-        xSemaphoreGive(CanSem);
-        vTaskDelay(pdMS_TO_TICKS(10));
-        }
 
+        }
 }
 
 void timer1(TimerHandle_t p){
@@ -209,111 +199,6 @@ void task_ad01(){
     }
 }
 
-// Q9
-
-uint32_t ulInterrupt_Keyboard(){
-    int key = KeyboardGetLastKey();
-    if(key >= 48 && key <= 57){
-        consigne_vitesse = (key - 48) * 5;
-        led_r((consigne_vitesse > 10)?1:0);
-    }
-    return pdFALSE;
-}
-
-void task_vitesse(){
-printf("Vitesse \n");
-int i;
-char nom[]="#VROUM*";
-CanFrame cmd ;
-cmd.data.id='V';
-cmd.data.rtr=0;
-cmd.data.val=0;
-
-	while (1){
-        //
-		cmd.data.val=consigne_vitesse;
-		xSemaphoreTake(CanSem,portMAX_DELAY);
-		while(!CanTxReady())
-            vTaskDelay(pdMS_TO_TICKS(1));
-
-        CanTxSendFrame(cmd);
-		vTaskDelay(pdMS_TO_TICKS(10));
-        xSemaphoreGive(CanSem);
-        vTaskDelay(pdMS_TO_TICKS(10));
-	}
-
-
-}
-
-// Q10
-void task_distance_mur(){
-    printf("Distance mur \n");
-    CanFrame com = {{'U',1,0}};
-    CanFrame receive;
-
-    while(1){
-            //
-            xSemaphoreTake(CanSem,portMAX_DELAY);
-            if(CanTxReady()){
-
-                CanTxSendFrame(com);
-                vTaskDelay(pdMS_TO_TICKS(25));
-
-                if (CanTxReady()){
-                    CanRxReadFrame(&receive);
-                    distance_telem=(signed short)receive.data.val;
-                    //
-                }
-                xSemaphoreGive(CanSem);
-                vTaskDelay(pdMS_TO_TICKS(10));
-
-
-            }
-    }
-
-
-}
-
-void task_reg_roue(){
-printf("REG ROUE \n");
-CanFrame cmd, receive,reg ;
-cmd.data.id='R';
-cmd.data.rtr=0;
-reg.data.id='D';
-reg.data.rtr = 0;
-int angle;
-char tmp[32];
-
-    while(1){
-            //
-            xSemaphoreTake(CanSem,portMAX_DELAY);
-            if(CanTxReady()){
-
-                CanTxSendFrame(cmd);
-                vTaskDelay(pdMS_TO_TICKS(25));
-
-                if (CanTxReady()){
-                    CanRxReadFrame(&receive);
-                    angle=(signed short)receive.data.val;
-                }
-            }
-            printf("distance telem_laser : %d", distance_telem);
-            consigne_distance = -(600 - distance_telem);
-            if (abs(consigne_distance) < 150){
-                reg.data.val = consigne_distance;
-            }
-            while(!CanTxReady())
-                vTaskDelay(pdMS_TO_TICKS(1));
-            CanTxSendFrame(reg);
-            vTaskDelay(pdMS_TO_TICKS(10));
-            xSemaphoreGive(CanSem);
-            vTaskDelay(pdMS_TO_TICKS(10));
-
-            }
-            //
-
-
-}
 
 
 
@@ -321,27 +206,16 @@ int main()
 {
 TaskHandle_t htask_1;
 TimerHandle_t htimer1;
-CanSem = xSemaphoreCreateMutex();
 
     HardwareInit(8,9);
     ControlPanelInit(7);
     //ControlPanelInitAddr("192.168.1.221",7);
 
-    // Control panel
-    vPortSetInterruptHandler(7, ulInterrupt_Keyboard);
-
-    // Init semaphore
-
-
     printf("Demarrage des taches\n");
     //xTaskCreate(task_1,"Tache 1",configMINIMAL_STACK_SIZE,NULL,6,&htask_1);
-    //xTaskCreate(task_ad01,"Tache ad01",configMINIMAL_STACK_SIZE,NULL,6,&htask_1);
-    //xTaskCreate(task_azimuth,"Tache azimuth",configMINIMAL_STACK_SIZE,NULL,6,&htask_1);
+    xTaskCreate(task_ad01,"Tache ad01",configMINIMAL_STACK_SIZE,NULL,6,&htask_1);
+    xTaskCreate(task_azimuth,"Tache azimuth",configMINIMAL_STACK_SIZE,NULL,6,&htask_1);
     xTaskCreate(task_auto_reg,"Tache regulation",configMINIMAL_STACK_SIZE,NULL,6,&htask_1);
-    xTaskCreate(task_distance_mur,"distance mur",configMINIMAL_STACK_SIZE,NULL,6,&htask_1);
-    xTaskCreate(task_vitesse,"Tache vitesse",configMINIMAL_STACK_SIZE,NULL,6,&htask_1);
-
-    xTaskCreate(task_reg_roue,"regu roue",configMINIMAL_STACK_SIZE,NULL,6,&htask_1);
     htimer1=xTimerCreate("Timer 1",250,pdTRUE,NULL,timer1);
     xTimerStart(htimer1,0);
     vTaskStartScheduler();
