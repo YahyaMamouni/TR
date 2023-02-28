@@ -377,9 +377,10 @@
 	"queue.h"
 	"timers.h"
 
-1676995143 source:c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\firmwareisima\main_isima.c
+1677601016 source:c:\users\yamamouni\desktop\tr\temps_reel\firmwarefreertos\firmwareisima\main_isima.c
 	<stdio.h>
 	<stdlib.h>
+	<math.h>
 	"FreeRTOS.h"
 	"task.h"
 	"queue.h"
