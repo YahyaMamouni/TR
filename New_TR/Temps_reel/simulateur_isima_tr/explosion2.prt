@@ -1,0 +1,37 @@
+// Medium explosion
+
+ttl_generator=0.1;
+ttl_particles=0.5;
+ttl_particles_random=0.1;
+
+particles_per_second=200;
+
+//position={0,0,0};
+//position_random={0,0,0}
+
+texture="explosion.tga";
+
+size=6;
+size_random=2;
+size_inc_per_sec=-1;
+//size_limit=1;
+
+gravity={0,0,0};
+vector={0,0,0};
+vector_random={1,1,1};
+//velocity_limit={0,0,0};
+
+// deg/sec
+//rotation_speed=45;
+// more or less 20 deg/sec
+//rotation_random=20; 
+
+// RGBA
+color_start={1,0.8,0,0.5};
+color_start_random={0,0.2,0,0};
+color_end={0.1,0.1,0.1,0};
+//color_end_random={0,0,0,0};
+
+//transform="test2.prt";
+
+// end of file.

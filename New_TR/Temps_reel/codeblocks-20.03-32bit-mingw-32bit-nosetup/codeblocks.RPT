@@ -1,0 +1,214 @@
+-------------------
+
+Error occurred on Monday, March 13, 2023 at 19:46:42.
+
+codeblocks.exe caused a Breakpoint at location 698068C5 in module wxmsw313u_gcc_custom.dll.
+
+Registers:
+eax=008fe1cc ebx=008fe3e4 ecx=6a706b44 edx=008fe1cc esi=0472bf40 edi=039c3bb0
+eip=698068c5 esp=008fe204 ebp=008fe33c iopl=0         nv up ei pl nz na pe nc
+cs=0023  ss=002b  ds=002b  es=002b  fs=0053  gs=002b             efl=00200202
+
+AddrPC   Params
+698068C5 0CC1E5C8 0000012F 008FE37C  wxmsw313u_gcc_custom.dll!wxFile::Write
+012B9E36 008FE9AC 0CC1E5C8 0000012F  codeblocks.dll!FileManager::SaveUTF8
+013317CB 008FE9AC 008FE578 6AA110C8  codeblocks.dll!TinyXML::SaveDocument
+012C6104 008FE578 008FE9AC 00000001  codeblocks.dll!cbSaveTinyXMLDocument
+0133EABE 008FE9AC 00000000 0CC87468  codeblocks.dll!WorkspaceLoader::SaveLayout
+01258490 1527BFE0 111FE280 1527BFE0  codeblocks.dll!cbWorkspace::SaveLayout
+01258351 0CF0CA18 0D32C6A0 00000000  codeblocks.dll!cbWorkspace::ActiveProjectChanged
+0130CDFB 0D32C6A0 00000000 008FFB40  codeblocks.dll!ProjectManager::SetProject
+0130D1F3 04655A4C 00000001 008FFB40  codeblocks.dll!ProjectManager::LoadProject
+00463718 04655A4C 00000001 00000000  codeblocks.exe!0x63718
+0046315F 04655A4C 00000001 00000000  codeblocks.exe!0x6315f
+004680A6 00000000 00000000 008FF0D8  codeblocks.exe!0x680a6
+0046878C 00000000 00000000 00000000  codeblocks.exe!0x6878c
+0046898C 008FF878 0000F095 0026030F  codeblocks.exe!0x6898c
+697C2CB2 76F08320 00000001 00000090  wxmsw313u_gcc_custom.dll!wxAppConsoleBase::HandleEvent
+0345A418 03A147F0 00468972 00000000
+697C3147 03A147F0 0345A418 008FF878  wxmsw313u_gcc_custom.dll!wxAppConsoleBase::CallEventHandler
+6990B00E 008FF878 6990B421 046DD208  wxmsw313u_gcc_custom.dll!wxEvtHandler::ProcessEventIfMatchesId
+0345A418 046DD208 00000007 008FF878
+6990B421 0000285B 00000000 FFFF8388  wxmsw313u_gcc_custom.dll!wxEvtHandler::SearchDynamicEventTable
+03A2F448 00008388 03A147F0 69B71CB8
+03A2FAC0 00000000 00000000 00000000
+
+codeblocks.exe	20.3.0.0
+ntdll.dll   	10.0.22621.1105
+KERNEL32.DLL	10.0.22621.1194
+KERNELBASE.dll	10.0.22621.1265
+msvcrt.dll  	7.0.22621.608
+COMCTL32.DLL	6.10.22621.608
+SHELL32.dll 	10.0.22621.1265
+GDI32.dll   	10.0.22621.608
+msvcp_win.dll	10.0.22621.608
+win32u.dll  	10.0.22621.608
+ucrtbase.dll	10.0.22621.608
+gdi32full.dll	10.0.22621.1265
+USER32.dll  	10.0.22621.1194
+wxmsw313u_gcc_custom.dll	3.1.3.0
+SHFOLDER.DLL	10.0.22621.1
+exchndl.dll 	0.9.1.0
+ADVAPI32.dll	10.0.22621.608
+mgwhelp.dll 	0.9.1.0
+sechost.dll 	10.0.22621.608
+PSAPI.DLL   	10.0.22621.1
+RPCRT4.dll  	10.0.22621.1105
+dbghelp.dll 	10.0.17134.12
+COMDLG32.DLL	10.0.22621.1105
+VERSION.dll 	10.0.22621.1
+dbgcore.DLL 	10.0.17134.12
+combase.dll 	10.0.22621.900
+shcore.dll  	10.0.22621.900
+SHLWAPI.dll 	10.0.22621.608
+ole32.dll   	10.0.22621.608
+OLEAUT32.dll	10.0.22621.608
+OLEACC.dll  	7.2.22621.1
+WINMM.DLL   	10.0.22621.608
+UxTheme.dll 	10.0.22621.900
+WINSPOOL.DRV	10.0.22621.1194
+WSOCK32.DLL 	10.0.22621.1
+WS2_32.dll  	10.0.22621.1
+codeblocks.dll
+IMM32.DLL   	10.0.22621.755
+CRYPTSP.dll 	10.0.22621.1
+rsaenh.dll  	10.0.22621.1
+CRYPTBASE.dll	10.0.22621.1
+bcryptPrimitives.dll	10.0.22621.1105
+kernel.appcore.dll	10.0.22621.1
+windows.storage.dll	10.0.22621.1194
+wintypes.dll	10.0.22621.900
+MSCTF.dll   	10.0.22621.1194
+SspiCli.dll 	10.0.22621.674
+textinputframework.dll	10.0.22621.1194
+CoreMessaging.dll	10.0.22621.608
+CoreUIComponents.dll	10.0.22621.608
+clbcatq.dll 	2001.12.10941.16384
+dataexchange.dll	10.0.22621.608
+twinapi.appcore.dll	10.0.22621.755
+WindowsCodecs.dll	10.0.22621.608
+profapi.dll 	10.0.22621.1
+msftedit.DLL	10.0.22621.608
+TextShaping.dll	10.0.22621.608
+Windows.Globalization.dll	10.0.22621.608
+globinputhost.dll	10.0.22621.608
+Bcp47Langs.dll	10.0.22621.608
+abbreviations.dll
+astyle.dll
+autosave.dll
+AutoVersioning.dll
+BrowseTracker.dll
+byogames.dll
+cb_koders.dll
+Cccc.dll
+classwizard.dll
+codecompletion.dll
+codesnippets.dll
+codestat.dll
+compiler.dll
+copystrings.dll
+CppCheck.dll
+Cscope.dll
+debugger.dll
+defaultmimehandler.dll
+devpakupdater.dll
+DoxyBlocks.dll	1.7.663.8397
+DragScroll.dll
+EditorConfig.dll
+EditorTweaks.dll
+envvars.dll
+Exporter.dll
+FileManager.dll
+FortranProject.dll
+headerfixup.dll
+help_plugin.dll
+HHCTRL.OCX  	10.0.22621.1
+HexEditor.dll
+IncrementalSearch.dll
+keybinder.dll
+lib_finder.dll
+wxflatnotebook.dll
+MouseSap.dll
+NassiShneiderman.dll
+OccurrencesHighlighting.dll
+openfileslist.dll
+Profiler.dll
+ProjectOptionsManipulator.dll
+projectsimporter.dll
+RegExTestbed.dll
+ReopenEditor.dll
+rndgen.dll
+scriptedwizard.dll
+SmartIndentCpp.dll
+SmartIndentFortran.dll
+SmartIndentHDL.dll
+SmartIndentLua.dll
+SmartIndentPascal.dll
+SmartIndentPython.dll
+SmartIndentXML.dll
+SpellChecker.dll
+SymTab.dll
+ThreadSearch.dll
+wxcustombutton.dll
+todo.dll
+ToolsPlus.dll
+wxsmith.dll
+wxsmithlib.dll
+wxSmithAui.dll
+wxSmithContribItems.dll
+wxdatetimepicker.dll
+wxchartctrl.dll
+wximagepanel.dll
+wxspeedbutton.dll
+wxkwic.dll
+wxled.dll
+wxmathplot.dll
+xpmanifest.dll
+msimg32.dll 	10.0.22621.608
+dwmapi.dll  	10.0.22621.608
+CFGMGR32.dll	10.0.22621.755
+propsys.dll 	7.0.22621.608
+tiptsf.dll  	10.0.22621.608
+edputil.dll 	10.0.22621.1
+thumbcache.dll	10.0.22621.1
+apphelp.dll 	10.0.22621.1194
+NetworkExplorer.dll	10.0.22621.1
+ntshrui.dll 	10.0.22621.1105
+srvcli.dll  	10.0.22621.1
+cscapi.dll  	10.0.22621.1
+StructuredQuery.dll	7.0.22621.900
+policymanager.dll	10.0.22621.1194
+msvcp110_win.dll	10.0.22621.1
+Windows.System.Launcher.dll	10.0.22621.608
+windows.staterepositorycore.dll	10.0.22621.1194
+Windows.Storage.Search.dll	10.0.22621.1105
+Windows.StateRepositoryPS.dll	10.0.22621.1194
+FileSyncShell.dll	23.38.219.1
+CRYPT32.dll 	10.0.22621.674
+bcrypt.dll  	10.0.22621.1105
+WININET.dll 	11.0.22621.608
+Secur32.dll 	10.0.22621.1
+WTSAPI32.dll	10.0.22621.1
+USERENV.dll 	10.0.22621.1
+MrmCoreR.dll	10.0.22621.608
+iertutil.dll	11.0.22621.674
+Windows.FileExplorer.Common.dll	10.0.22621.1105
+IconCodecService.dll	10.0.22621.1
+LINKINFO.dll	10.0.22621.1
+ieframe.dll 	11.0.22621.1265
+WINHTTP.dll 	10.0.22621.608
+msIso.dll   	11.0.22621.674
+windows.staterepositoryclient.dll	10.0.22621.1194
+urlmon.dll  	11.0.22621.1265
+netutils.dll	10.0.22621.674
+DUser.dll   	10.0.22621.1
+atlthunk.dll	10.0.22621.1
+samcli.dll  	10.0.22621.1
+SAMLIB.dll  	10.0.22621.608
+MLANG.dll   	10.0.22621.1
+OneCoreCommonProxyStub.dll	10.0.22621.755
+symsrv.dll  	10.0.17134.12
+
+Windows 10.0.22621
+DrMingw 0.9.1
+
